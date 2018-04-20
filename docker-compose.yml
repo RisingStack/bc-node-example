@@ -1,0 +1,25 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  mongodb:
+    image: bitnami/mongodb
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "{ ping: 1 }"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes: 
+      - "./prometheus-data:/prometheus-data"
+    command: 
+      - "--web.enable-lifecycle" 
+      - "--config.file=/prometheus-data/prometheus.yml"

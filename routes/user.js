@@ -1,40 +1,75 @@
 const userModel = require('../models').user
 
-async function post (req, res) {
+async function post (req, res, next) {
   try {
     await userModel.add(req.body)
   } catch (err) {
     if (err.code === 11000) {
-      return res.sendStatus(400)
+      res.sendStatus(400)
+      return next()
     }
   }
-  return res.send()
+  res.send()
+  return next()
 }
 
-async function get (req, res) {
+async function get (req, res, next) {
+  let user
   try {
-    const user = await userModel.findById(req.params.id)
+    user = await userModel.findAll()
   } catch (err) {
-    return res.sendStatus(500)
+    res.sendStatus(500)
+    return next()
   }
 
   if (!user) {
-    return res.sendStatus(404)
+    res.sendStatus(404)
+    return next()
   }
 
-  return res.json(user)
+  res.json(user)
+  return next()
 }
 
-async function del (req, res) {
+async function getById (req, res, next) {
+  let user
   try {
-    const removedUser = await userModel.remove(req.params.id)
+    user = await userModel.findById(req.params.id)
   } catch (err) {
-    return res.sendStatus(500)
+    res.sendStatus(500)
+    return next()
   }
 
   if (!user) {
-    return res.sendStatus(404)
+    res.sendStatus(404)
+    return next()
   }
 
-  return res.send()
+  res.json(user)
+  return next()
+}
+
+async function del (req, res, next) {
+  let removedUser
+  try {
+    removedUser = await userModel.remove(req.params.id)
+  } catch (err) {
+    res.sendStatus(500)
+    return next()
+  }
+
+  if (!removedUser) {
+    res.sendStatus(404)
+    return next()
+  }
+
+  res.send()
+  return next()
+}
+
+module.exports = {
+  post,
+  getById,
+  get,
+  del
 }
