@@ -5,12 +5,12 @@ const _ = require('lodash/fp')
 const app = require('../server')
 const UserModel = require('../models').user
 
-afterEach(async function () {
-  await UserModel.deleteMany({})
+before(async () => {
+  await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1/Test')
 })
 
-after(async function () {
-  await mongoose.disconnect()
+afterEach(async function () {
+  await UserModel.deleteMany({})
 })
 
 describe('POST /user', function () {

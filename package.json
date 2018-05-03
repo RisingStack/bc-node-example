@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test TZ=utc mocha './**/*.e2e.js'",
+    "test": "NODE_ENV=test TZ=utc mocha './**/*.e2e.js' 'test/teardown.js'",
     "start": "node index.js --use-strict"
   },
   "keywords": [],

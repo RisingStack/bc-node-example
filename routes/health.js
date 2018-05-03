@@ -17,7 +17,7 @@ function get (req, res, next) {
     return next()
   }
 
-  promiseTimeout(mongo.db.admin().ping, HEALTH_TIMEOUT)
+  promiseTimeout(mongo.db.admin().ping(), HEALTH_TIMEOUT)
     .then(() => {
       res.sendStatus(200)
       next()
