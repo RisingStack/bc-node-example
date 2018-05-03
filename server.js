@@ -6,7 +6,6 @@ const routes = require('./routes')
 const mongoose = require('mongoose')
 
 const app = express()
-const port = process.env.PORT || 3001
 
 app.use(bodyParser.json())
 app.use(metrics.middleware.recordResponseTime)
