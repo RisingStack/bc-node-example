@@ -22,6 +22,8 @@ async function get (req, res, next) {
     return next()
   }
 
+  // per REST it should send 409 - conflict
+  // sends 404 here to better demonstrate Prometheus monitoring
   if (!user) {
     res.sendStatus(404)
     return next()
@@ -58,6 +60,8 @@ async function del (req, res, next) {
     return next()
   }
 
+  // per REST it should send an ok answer to provide an idempotent contract
+  // sends 404 here to better demonstrate Prometheus monitoring
   if (!removedUser) {
     res.sendStatus(404)
     return next()
