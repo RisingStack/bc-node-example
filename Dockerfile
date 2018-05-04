@@ -11,4 +11,4 @@ ENV PORT 3001
 
 EXPOSE 3001
 
-CMD ["node", "server", "--use-strict"]
+CMD ["node", "index.js", "--use-strict"]
